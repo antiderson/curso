@@ -1,11 +1,14 @@
 import Head from 'next/head'
+import { Layout } from 'components'
 
-export default function Home() {
+const Home: React.FC =() => {
   return (
     <>
       <Head>
+        <p>teste de vendas</p>
       </Head>
-      Teste
+      <Layout />
     </>
   )
 }
+export default Home;
