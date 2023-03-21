@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import { Layout } from 'components'
 
-const Home: React.FC =() => {
+const Home: React.FC = () => {
   return (
     <>
       <Head>
-        <p>teste de vendas</p>
+        <title>Pagina de vendas</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout />
     </>
