@@ -1,30 +1,15 @@
 import React from "react";
+import Link from "next/link";
 
 export const Menu: React.FC = () => {
     return (
         <aside className="collumn is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
             <p className="menu-label is-hidden-touch">Minhas vendas</p>
             <ul className="menu-list">
-                <li>
-                    <a href="#">
-                        <span className="icon"></span> Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"></span> Cadastros
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"></span> Config
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon"></span> Sair
-                    </a>
-                </li>
+                <MenuItem href="/" label="Home" />
+                <MenuItem href="/cadastros/produtos" label="Produtos" />
+                <MenuItem href="/" label="Config" />
+                <MenuItem href="/" label="Sair" />
             </ul>
         </aside>
     )
@@ -32,17 +17,19 @@ export const Menu: React.FC = () => {
 
 
 interface MenuItemProps {
-    href?: string,
-    label?: string,
+    href: string,
+    label: string,
     onClick?: () => void
 }
 
 const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
     return (
         <li>
-            <link rel="stylesheet" href="{props.href}">
-                <a onClick={props.onClick} href=""></a>
-            </link>
+            <Link href={props.href}>
+                <span onClick={props.onClick}>
+                    <span className="icon"></span> {props.label}
+                </span>
+            </Link>
         </li>
     )
 }

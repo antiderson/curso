@@ -3,7 +3,7 @@ import React,{InputHTMLAttributes} from "react";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     id: string,
     onChange?: (value: any) => void;
-    label?: string;
+    label: string;
     columnClasses?: string
 }
 
@@ -16,7 +16,7 @@ export const Input: React.FC<InputProps> = ({
 }: InputProps) => {
     return (
         <div className={`field column ${columnClasses}`}>
-            <label htmlFor='inputSku' className="label">{label}</label>
+            <label htmlFor={id} className="label">{label}</label>
             <div className='control'>
                 <input className="input"
                     id={id} {...inputProps}

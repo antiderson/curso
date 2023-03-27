@@ -1,39 +1,71 @@
 import React, { useState } from 'react';
 import { Layout, Input } from 'components';
+import { useProdutoService } from '@/app/services';
+import { Produto } from '@/app/models/produtos';
 
 export const CadastroProdutos: React.FC = () => {
 
-    const [SKU, setSku] = useState('');
-    const [Preco, setPreco] = useState('');
-    const [Nome, setNome] = useState('');
-    const [Descricao, setDescricao] = useState('');
+    const service = useProdutoService()
+    const [sku, setSku] = useState<string>('');
+    const [preco, setPreco] = useState<string>('');
+    const [nome, setNome] = useState<string>('');
+    const [descricao, setDescricao] = useState<string>('');
+    const [id, setId] = useState<string>('');
+    const [cadastro, setCadastro] = useState<string>(''); 
 
     const submit = () => {
-        const produto = {
-            SKU,
-            Preco,
-            Nome,
-            Descricao
+        const produto: Produto = {
+            id,
+            sku,
+            preco: parseFloat(preco),
+            nome,
+            descricao,
         }
-        console.log(produto)
+
+        if (id) {
+            service.atualizar(produto)
+                .then(response => console.log("atualizado"))
+        } else {
+            service
+                .salvar(produto)
+                .then(produtoResposta => {
+                    setId(produtoResposta.id)
+                    setCadastro(produtoResposta.cadastro)
+                })
+        }
     }
 
     return (
-        <Layout titulo='Cadastro de Produtos'>
+        <Layout titulo='Cadastro de Produtos '>
+            <div className='columns'>
+                <Input label='Código'
+                    columnClasses='if-half'
+                    value={id}
+                    id="inputId"
+                    disabled />
+
+                <Input
+                    label='Data de cadastro'
+                    columnClasses='if-half'
+                    value={cadastro}
+                    id="inputDataCadastro"
+                    disabled />
+            </div>
+
             <div className='columns'>
                 <Input label='SKU: *'
                     columnClasses='if-half'
                     onChange={setSku}
-                    value={SKU}
-                    id={SKU}
+                    value={sku}
+                    id={sku}
                     placeholder="Digite o SKU" />
 
-                <Input 
+                <Input
                     label='Preço: *'
                     columnClasses='if-half'
                     onChange={setPreco}
-                    value={Preco}
-                    id={Preco}
+                    value={preco}
+                    id={preco}
                     placeholder="Digite o preço"
                 />
             </div>
@@ -42,22 +74,24 @@ export const CadastroProdutos: React.FC = () => {
                 label='Nome: *'
                 columnClasses='if-half'
                 onChange={setNome}
-                value={Nome}
-                id={Nome}
+                value={nome}
+                id={nome}
                 placeholder="Digite o nome"
             />
-            
+
             <Input
                 label='Descrição: *'
                 columnClasses='if-half'
                 onChange={setDescricao}
-                value={Descricao}
-                id={Descricao}
+                value={descricao}
+                id={descricao}
                 placeholder="Digite a descrição"
-                />
-            
+            />
+
             <div className="buttons">
-                <button className="button is-primary" onClick={submit}>Cadastrar</button>
+                <button className="button is-primary" onClick={submit}>
+                    {id ? 'Atualizar' : 'Salvar'}
+                </button>
                 <button className="button is-link">Voltar</button>
             </div>
         </Layout >
