@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Input } from 'components';
 import { useProdutoService } from '@/app/services';
 import { Produto } from '@/app/models/produtos';
+import Link from 'next/link';
 
 export const CadastroProdutos: React.FC = () => {
 
@@ -11,7 +12,7 @@ export const CadastroProdutos: React.FC = () => {
     const [nome, setNome] = useState<string>('');
     const [descricao, setDescricao] = useState<string>('');
     const [id, setId] = useState<string>('');
-    const [cadastro, setCadastro] = useState<string>(''); 
+    const [cadastro, setCadastro] = useState<string>('');
 
     const submit = () => {
         const produto: Produto = {
@@ -92,7 +93,9 @@ export const CadastroProdutos: React.FC = () => {
                 <button className="button is-primary" onClick={submit}>
                     {id ? 'Atualizar' : 'Salvar'}
                 </button>
+                <Link href="/consultas/produtos">
                 <button className="button is-link">Voltar</button>
+                </Link>
             </div>
         </Layout >
     )
